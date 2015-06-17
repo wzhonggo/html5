@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+      <script src="js/jquery.min.js"></script>
+    <script>
+                // load event
+        function metedataLoadEvent(video) {
+//           alert("Meta data for audio loaded");
+             var metedata = "duration " + $(video).prop("duration");
+             var metedata = metedata + " video height :" + $(video).prop("videoHeight");
+             var metedata = metedata + " video Width  :" + $(video).prop("videoWidth");
+
+             $("#demo").html(metedata);
+
+        }
+
+
+                function generateThumbnail() {
+                    //generate thumbnail URL data
+                    var canvas = document.getElementById("thecanvas");
+                    var context = canvas.getContext('2d');
+//                    context.drawImage($("#demoVideo")[0], 0, 0, 220, 150);
+                    context.drawImage(document.getElementById("demoVideo"), 0, 0, canvas.width, canvas.height);
+//                    context.drawImage(document.getElementById("demoVideo"), 0, 0);
+//                    var dataURL = canvas.toDataURL();
+                    var dataURL = canvas.toDataURL("image/png");
+
+                    //create img
+                    var img = document.createElement('img');
+                    img.setAttribute('src', dataURL);
+
+                    //append img in container div
+                    document.getElementById('thumbnailContainer').appendChild(img);
+                }
+
+                //
+                var imageUrl = "http://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png";
+                function convertImgToBase64URL(url) {
+                    var img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    img.onload = function () {
+                        var canvas = document.createElement('CANVAS'),
+                                ctx = canvas.getContext('2d'), dataURL;
+                        canvas.height = img.height;
+                        canvas.width = img.width;
+                        ctx.drawImage(img, 0, 0);
+                        dataURL = canvas.toDataURL();
+
+                          var dataImage = document.createElement('img');
+                    dataImage.setAttribute('src', dataURL);
+
+                    //append img in container div
+                    document.getElementById('thumbnailContainer').appendChild(dataImage);
+
+//                        callback(dataURL);
+                        canvas = null;
+                    };
+                    img.src = url;
+                }
+//                convertImgToBase64URL(imageUrl);
+
+
+
+         function gotoTime() {
+               var time  = Math.max(0, Math.min($("#demoVideo").prop("duration"), $("#currentTime").val()));
+             $("#demoVideo").prop("currentTime",time);
+         }
+
+
+
+    </script>
+</head>
+<body>
+
+<video controls autoplay="" onloadedmetadata="metedataLoadEvent(this)" id="demoVideo">
+    <source src="video/pp4_blog_demo.mp4">
+    <track kind="subtitles" src="caption/demo.vtt" srclang="en" label="English" default></track>
+    <track id="germantrack" label="German" src="caption/de-captions.vtt" kind="subtitles" srclang="de"></track>
+</video>
+<div id="demo">
+
+</div>
+<div>
+    <button onclick="generateThumbnail()"> capture image</button>
+    <input id="currentTime">
+    <button onclick="gotoTime()"> go to time</button>
+    <div id="thumbnailContainer">
+
+    </div>
+        <canvas id="thecanvas">
+    </canvas>
+</div>
+</body>
+</html>

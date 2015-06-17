@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        var _masterVolume =1;
+
+        function breakPlay() {
+            $('#break').trigger("play");
+        }
+
+        function breakPause() {
+            $('#break').trigger("pause");
+        }
+
+        function breakVolumeIncrease() {
+             $('#break').prop("muted", false);
+            var volume = $('#break').prop("volume") + 0.1;
+            $('#break').prop("volume", Math.min(1, volume));
+        }
+
+        function breakVolumeDecrease() {
+            var volume = $('#break').prop("volume") - 0.1;
+            $('#break').prop("volume", Math.max(0, volume));
+        }
+
+        function breakMuted() {
+            $('#break').prop("muted", true);
+        }
+
+              function breakUnmute() {
+            $('#break').prop("muted", false);
+        }
+
+
+
+
+
+         function musicPlay() {
+            $('#music').trigger("play");
+        }
+
+        function musicPause() {
+            $('#music').trigger("pause");
+        }
+
+        function musicVolumeIncrease() {
+             $('#music').prop("muted", false);
+            var volume = $('#music').prop("volume") + 0.1;
+            $('#music').prop("volume", Math.min(1, volume));
+        }
+
+        function musicVolumeDecrease() {
+            var volume = $('#music').prop("volume") - 0.1;
+            $('#music').prop("volume", Math.max(0, volume));
+        }
+
+        function musicMuted() {
+            $('#music').prop("muted", true);
+        }
+
+                  function musicUnmute() {
+            $('#music').prop("muted", false);
+        }
+
+
+//       $('audio').addEventListener("loadedmetadata", metedataLoadEvent);
+
+
+        // load event
+        function metedataLoadEvent(audio) {
+//           alert("Meta data for audio loaded");
+            if( $(audio).prop("src").indexOf("break.mp3") !=-1){
+                 $("#breakMeteData").html("duration " + $(audio).prop("duration"));
+            }else{
+                 $("#musicMeteData").html("duration " + $(audio).prop("duration"));
+            }
+
+        }
+
+        // set global
+        function setGlobalVolume() {
+            var volume = Math.max(0, Math.min(1, $("#globalVolume").val()));
+
+            $("audio").prop("volume", volume);
+        }
+
+        function globalPlay() {
+
+            $('audio').trigger("play");
+        }
+
+        function globalPause() {
+
+            $('audio').trigger("pause");
+        }
+
+    </script>
+</head>
+<body>
+    <audio controls="" autoplay=""  loop src="audio/break.mp3" id="break" preload="metadata" onloadedmetadata="metedataLoadEvent(this)">
+        <track kind="subtitles" src="caption/demo.vtt" srclang="en-us" label="English"></track>
+    </audio>
+    <a onclick="breakPlay()">Play</a>  <a onclick="breakPause()">Pause</a>
+     <a onclick="breakVolumeIncrease()">VolumeIncrease</a>   <a onclick="breakVolumeDecrease()">VolumeDecrease</a>
+     <a onclick="breakMuted()">Muted</a>    <a onclick="breakUnmute()">Unmute</a>
+     <a id="breakMeteData"></a>
+   <div>
+
+   </div>
+   <audio controls="" autoplay=""  loop src="audio/music.mp3" id="music" onloadedmetadata="metedataLoadEvent(this)">
+
+    </audio>
+    <a onclick="musicPlay()">Play</a>  <a onclick="musicPause()">Pause</a>
+     <a onclick="musicVolumeIncrease()">VolumeIncrease</a>   <a onclick="musicVolumeDecrease()">VolumeDecrease</a>
+ <a onclick="musicMuted()">Muted</a>  <a onclick="musicUnmute()">Unmute</a>
+       <a id="musicMeteData"></a>
+ <div>
+    <input id="globalVolume">
+     <button onclick="setGlobalVolume()">set global volume</button>
+      <button onclick="globalPlay()">global play</button>
+      <button onclick="globalPause()"> global pause</button>
+ </div>
+
+
+
+<audio preload="none" controls="">
+<source src="audio/music.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
