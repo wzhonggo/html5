@@ -16,7 +16,7 @@
     * IE浏览器默认不识别 .vtt文件类型， 需要在 apache/conf/mime.tpyes 里面添加  **text/vtt						vtt**
     * FireFox track 标签要加 default才能显示字幕
 * 对通过Canvas 正在播放的视频截屏([图片跨域问题](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image))
-    * 对于跨域视频，Chrome和FireFox只需要在video标签上面添加，就可以截屏， IE下面有问题
+    * 对于跨域视频，Chrome和FireFox只需要在video标签上面添加crossorigin="*" ，就可以截屏， IE下面有问题
 
 #参考资料
 * [http://www.html5tutorial.info](http://www.html5tutorial.info)

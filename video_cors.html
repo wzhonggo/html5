@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+      <script src="js/jquery.min.js"></script>
+    <script>
+                // load event
+        function metedataLoadEvent(video) {
+//           alert("Meta data for audio loaded");
+             var metedata = "duration " + $(video).prop("duration");
+             var metedata = metedata + " video height :" + $(video).prop("videoHeight");
+             var metedata = metedata + " video Width  :" + $(video).prop("videoWidth");
+
+             $("#demo").html(metedata);
+
+        }
+
+
+                function generateThumbnail() {
+                    //generate thumbnail URL data
+                    var canvas = document.getElementById("thecanvas");
+                    var context = canvas.getContext('2d');
+                    //clear cancas context
+//                    context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    context.drawImage(document.getElementById("demoVideo"), 0, 0, canvas.width, canvas
+.height);
+                    var dataURL = canvas.toDataURL("image/png");
+
+                    //create img
+                    var img = document.createElement('img');
+                    img.setAttribute('src', dataURL);
+
+                    //append img in container div
+                    document.getElementById('thumbnailContainer').appendChild(img);
+                }
+
+
+         function gotoTime() {
+               var time  = Math.max(0, Math.min($("#demoVideo").prop("duration"), $("#currentTime").val
+()));
+             $("#demoVideo").prop("currentTime",time);
+         }
+
+
+
+    </script>
+</head>
+<body>
+
+<!--add crossorigin for fix " Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases
+ may not be exported."-->
+<video id="demoVideo" controls crossorigin="*" >
+        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    </video>
+<div id="demo">
+
+</div>
+<div>
+    <button onclick="generateThumbnail()"> capture image</button>
+    <input id="currentTime">
+    <button onclick="gotoTime()"> go to time</button>
+
+
+
+    <div id="thumbnailContainer">
+
+    </div>
+     <canvas id="thecanvas" >
+    </canvas>
+</div>
+</body>
+</html>
