@@ -18,6 +18,10 @@
 * 对通过Canvas 正在播放的视频截屏([图片跨域问题](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image))
     * 对于跨域视频，Chrome和FireFox只需要在video标签上面添加crossorigin="*" ，就可以截屏， IE下面有问题
 
+
+# HTML5 viewport 例子
+* 横竖屏自动充满，优先充满最容易充满的一边
+
 #参考资料
 * [http://www.html5tutorial.info](http://www.html5tutorial.info)
 * [http://www.w3schools.com](http://www.w3schools.com)

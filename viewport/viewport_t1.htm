@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>
+<meta http-equiv="Expires" content="Thu, 01 Jan 1970 00:00:00 GMT"/>
+<meta name="viewport" content="width=1000,user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<head>
+
+    <title>html5 横竖屏自动充满</title>
+    <style type="text/css">
+        html, body
+        {
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica, Arial, Verdana, sans-serif;
+            /* height: 100%; */
+            width: 100%;
+            /*-webkit-user-select: none;
+            -webkit-touch-callout: none;*/
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color:#D9D9D9;
+        }
+
+        .landscape body {
+            background-color: #ff0000;
+        }
+
+        .portrait body {
+            background-color: #00ffff;
+        }
+
+
+    </style>
+
+    <script src="../js/jquery.min.js"></script>
+    <script>
+
+
+        var docEl = document.documentElement;
+        var metaEl = document.querySelector('meta[name="viewport"]');
+
+
+        var offsetHeight;
+        (function () {
+            var supportOrientation = (typeof window.orientation == "number" && typeof window.onorientationchange == "object");
+
+            var updateOrientation = function () {
+                if (supportOrientation) {
+                    updateOrientation = function () {
+                        var orientation = window.orientation;
+                        switch (orientation) {
+                            case 90:
+                            case -90:
+                                orientation = "landscape";
+                                break;
+                            default:
+                                orientation = "portrait";
+                        }
+                        document.body.parentNode.setAttribute("class", orientation);
+
+
+                        if (orientation == "landscape") {
+                            var device = window.navigator.userAgent;
+
+                            var hr;
+                            var wr;
+                            if (device.match(/Android/gi)) {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            } else {
+                                hr = (window.screen.height - offsetHeight) / 1000;
+//                                    hr = window.screen.availHeight/1000;
+                                wr = window.screen.width / 400;
+                            }
+
+                            var s = Math.min(wr, hr);
+                            console.log("test orientation=landscape, scale=" + s);
+                            metaEl.setAttribute('content', 'width=1000,initial-scale=' + s);
+
+                        } else {
+                            var device = window.navigator.userAgent;
+                            var hr;
+                            var wr;
+                            if (device.match(/Android/gi)) {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            } else {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            }
+                            var s = Math.min(wr, hr);
+                            console.log("test orientation=portrait, scale=" + s);
+                            metaEl.setAttribute('content', 'width=1000,initial-scale=' + s);
+
+                        }
+                        document.getElementById("test").innerHTML = "test1" + metaEl.getAttribute("content") + " ,orientation = " + orientation + " ; window.screen.width =" + window.screen.width + " ,window.screen.height=" + window.screen.height  + ", test123456" + " ,wr=" + wr + " ,hr=" + hr + " ,scale=" + s + " ,offsetHeight=" + offsetHeight + " ,window.screen.availHeight=" + window.screen.availHeight + " ,window.navigator.userAgent=" + window.navigator.userAgent;
+
+                    };
+                } else {
+                    updateOrientation = function () {
+                        var orientation = (window.innerWidth > window.innerHeight) ? "landscape" : "portrait";
+                        document.body.parentNode.setAttribute("class", orientation);
+                        if (orientation == "landscape") {
+                            var device = window.navigator.userAgent;
+
+                            var hr;
+                            var wr;
+                            if (device.match(/Android/gi)) {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            } else {
+                                hr = (window.screen.height - offsetHeight) / 1000;
+//                                    hr = window.screen.availHeight/1000;
+                                wr = window.screen.width / 400;
+                            }
+
+                            var s = Math.min(wr, hr);
+                            console.log("test orientation=landscape, scale=" + s);
+                            metaEl.setAttribute('content', 'width=1000,initial-scale=' + s);
+
+                        } else {
+                            var device = window.navigator.userAgent;
+                            var hr;
+                            var wr;
+                            if (device.match(/Android/gi)) {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            } else {
+                                hr = (window.screen.height - offsetHeight) / 400;
+                                wr = window.screen.width / 1000;
+                            }
+                            var s = Math.min(wr, hr);
+                            console.log("test orientation=portrait, scale=" + s);
+                            metaEl.setAttribute('content', 'width=1000,initial-scale=' + s);
+
+                        }
+                        document.getElementById("test").innerHTML = "test1" + metaEl.getAttribute("content") + " ,orientation = " + orientation + " ; window.screen.width =" + window.screen.width + " ,window.screen.height=" + window.screen.height + ", test123456" + " ,wr=" + wr + " ,hr=" + hr + " ,scale=" + s + " ,offsetHeight=" + offsetHeight + " ,window.screen.availHeight=" + window.screen.availHeight + " ,window.navigator.userAgent=" + window.navigator.userAgent;
+
+
+                    };
+
+                }
+                updateOrientation();
+            };
+
+            var init = function () {
+                offsetHeight = document.documentElement.offsetHeight - document.body.offsetHeight;
+                updateOrientation();
+                if (supportOrientation) {
+                    window.addEventListener("orientationchange", updateOrientation, false);
+                } else {
+                    window.setInterval(updateOrientation, 1000);
+                }
+            };
+            window.addEventListener("DOMContentLoaded", init, false);
+        })();
+
+    </script>
+</head>
+<body>
+<div id="test"
+     style="width: 1000px;height: 400px; font-size: 20px; background-color: black;border: 0px; color: #FFFFFF"></div>
+
+</body>
+</html>
